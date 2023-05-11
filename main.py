@@ -33,7 +33,7 @@ def compare_songs(song1, song2):
         print('Invalid input, please try again...')
         return compare_songs(song1, song2)
 
-
+#
 # Create a list of all the songs
 all_songs = []
 for album, songs in albums.items():
