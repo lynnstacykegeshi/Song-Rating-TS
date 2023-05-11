@@ -42,6 +42,7 @@ for album, songs in albums.items():
 # Shuffle the list of all songs
 random.shuffle(all_songs)
 
+
 # Ask the user to compare all songs and collect their preferred songs
 ratings = {}
 for i in range(len(all_songs) - 1):
@@ -64,6 +65,24 @@ for i in range(len(all_songs) - 1):
             ratings[album] = album_ratings
 
 
+# Calculate the average rating for each song
+song_ratings = {song: 0 for album in albums.values() for song in album}
+for album, songs in albums.items():
+    for song in songs:
+        ratings_for_song = ratings.get(album, [])
+        if ratings_for_song:
+            average_rating = sum(ratings_for_song) / len(ratings_for_song)
+            song_ratings[song] = average_rating
+
+# Sort the songs by their ratings, from highest to lowest
+sorted_songs = sorted(song_ratings, key=song_ratings.get, reverse=True)
+
+# Print the sorted list of songs
+print('Here are all the songs from the albums, ranked from highest to lowest based on your ratings:')
+for song in sorted_songs:
+    print(song)
+
+
 # Calculate the average rating for each album
 album_ratings = {}
 for album, ratings_list in ratings.items():
@@ -77,19 +96,3 @@ for album, rating in sorted_album_ratings:
     print(f'{album}: {rating:.2f}')
 
 ########
-# First, calculate the average rating for each song
-song_ratings = {}
-for album, songs in albums.items():
-    for song in songs:
-        ratings_for_song = ratings.get(song, [])
-        if ratings_for_song:
-            average_rating = sum(ratings_for_song) / len(ratings_for_song)
-            song_ratings[song] = average_rating
-
-# Sort the songs by their ratings, from highest to lowest
-sorted_songs = sorted(song_ratings, key=song_ratings.get, reverse=True)
-
-# Print the sorted list of songs
-print('Here are the songs, ranked from highest to lowest based on your ratings:')
-for rank, song in enumerate(sorted_songs, start=1):
-    print(f'{rank}. {song}')
